@@ -1,0 +1,12 @@
+.header {
+  background-color: theme('colors.orange.400');
+  .login-btn {
+    transition: background-color .5s ease;
+    &:hover {
+      transition: background-color .5s ease;
+    }
+    &:active, &:focus {
+      outline: none;
+    }
+  }
+}
