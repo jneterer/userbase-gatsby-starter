@@ -3,22 +3,19 @@ import { Link } from "gatsby"
 
 // Components
 import Layout from "../components/layout"
-import Image from "../components/image"
 import SEO from "../components/seo"
 
 // Styles
 import '../styles/site.scss';
+import '../styles/layout.scss';
 
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
+    <h1 className="m-0 text-4xl text-center">
+      Just another todo application built on the exciting new serverless JavaScript
+      {` `}SDK <a className="link" href="https://userbase.com/" target="_blank" rel="noopener noreferrer">Userbase</a>.
+    </h1>
   </Layout>
 )
 

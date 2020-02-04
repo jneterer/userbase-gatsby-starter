@@ -27,18 +27,13 @@ const Layout = ({ children }) => {
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
       <div
-        className="top-20 relative"
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
+        className="top-20 relative px-20 py-10"
       >
         <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
+        <footer className="text-center">
+          © {new Date().getFullYear()}, Built by
           {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          <a className="link" href="https://jacobneterer.com/" target="_blank" rel="noopener noreferrer">Jacob Neterer</a>
         </footer>
       </div>
     </>
