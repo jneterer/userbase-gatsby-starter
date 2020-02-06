@@ -2,6 +2,9 @@ import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 
+// Styles
+import './header.scss';
+
 const Header = ({ siteTitle }) => (
   <header className="fixed w-full bg-orange.400 h-20 z-50 flex justify-between items-center px-20">
     <h1 className="m-0 text-4xl">
@@ -15,9 +18,11 @@ const Header = ({ siteTitle }) => (
         {siteTitle}
       </Link>
     </h1>
-    <button className="login-btn bg-white hover:bg-black text-black hover:text-white font-semibold py-2 px-10 rounded">
-      Login
-    </button>
+    <Link to="/login">
+      <button className="btn-secondary">
+        Login
+      </button>
+    </Link>
   </header>
 )
 

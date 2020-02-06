@@ -1,28 +1,10 @@
 html {
   font: georgia, serif;
+  box-sizing: border-box;
+  overflow-y: scroll;
 }
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-a {
-  &.link {
-    @apply font-black;
-    color: theme('colors.orange.400') !important;
-    text-decoration: underline !important;
-    transition: color .25s ease;
-    &:hover {
-      color: theme('colors.black') !important;
-      transition: color .25s ease;
-    }
-  }
-  &:active, &:hover {
-    outline-width: 0;
-  }
-}
-
-html {
-  box-sizing: border-box;
-  overflow-y: scroll;
 }

@@ -1,7 +1,60 @@
+// Import tailwind styles
 @import "tailwindcss/base";
 
 @import "tailwindcss/components";
 
 @import "tailwindcss/utilities";
 
-@import 'header.scss';
+// Import default styles for different aspects of the site
+@import './forms.scss';
+
+// Default anchor style
+a {
+  &.link {
+    @apply font-black;
+    color: theme('colors.orange.400') !important;
+    text-decoration: underline !important;
+    transition: color .25s ease;
+    &:hover {
+      color: theme('colors.black') !important;
+      transition: color .25s ease;
+    }
+  }
+  &:active, &:hover {
+    outline-width: 0;
+  }
+}
+
+@mixin btn-style($bg-color, $hover-bg-color, $text-color, $hover-text-color: false) {
+  background-color: theme($bg-color);
+  color: theme($text-color);
+  @if $hover-text-color {
+    transition: background-color .25s, color .25s ease;
+  } @else {
+    transition: background-color .25s ease;
+  }
+  @apply font-semibold py-2 px-10 rounded;
+  &:hover {
+    background-color: theme($hover-bg-color);
+    @if $hover-text-color {
+      color: theme($hover-text-color);
+      transition: background-color .25s, color .25s ease;
+    } @else {
+      transition: background-color .25s ease;
+    }
+  }
+  &:active, &:focus {
+    outline: none;
+  }
+}
+
+.btn {
+  &-primary {
+    @include btn-style('colors.orange.400', 'colors.orange.300', 'colors.black');
+  }
+  &-secondary {
+    @include btn-style('colors.white', 'colors.black', 'colors.black', 'colors.white');
+  }
+}
+
+
