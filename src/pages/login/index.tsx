@@ -69,17 +69,17 @@ class Login extends React.Component<{}, ILogicForm> {
                 <p className="error-msg">This field is required.</p>
             }
           </div>
-          <div className="flex justify-end mb-4">
+          <div className="flex justify-end mb-6">
             <Link to="/forgot-password" className="link">
               Forgot Password?
             </Link>
           </div>
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-6">
             <button className="btn-primary" type="submit">
               Sign In
             </button>
           </div>
-          <hr className="mb-4"/>
+          <hr className="mb-6"/>
           <div className="flex justify-center">
             <Link to="/register" className="link">
               Create an account
