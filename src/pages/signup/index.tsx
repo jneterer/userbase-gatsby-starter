@@ -7,19 +7,31 @@ import SEO from "../../components/seo";
 
 // Types
 import { IFormField } from "../../types/iform-field";
-import { ILoginForm } from "./ilogin-form";
+import { ISignupForm } from "./isignup-form";
 
-class Login extends React.Component<{}, ILoginForm> {
+class Signup extends React.Component<{}, ISignupForm> {
   constructor(props) {
     super(props);
     this.state = {
       formFields: {
+        firstName: {
+          name: 'firstName',
+          value: ''
+        },
+        lastName: {
+          name: 'lastName',
+          value: ''
+        },
         email: {
           name: 'email',
           value: ''
         },
         password: {
           name: 'password',
+          value: ''
+        },
+        confirmPassword: {
+          name: 'confirmPassword',
           value: ''
         }
       },
@@ -59,6 +71,15 @@ class Login extends React.Component<{}, ILoginForm> {
   }
 
   /**
+   * Checks if the confirm password form field matches the password form field.
+   * @param {string} formFieldName The name of the form field.
+   * @returns {boolean} Returns true if the form field field is not currently invalid, has been touched (focused on and then blurred), changed, and does not equal the password form field.
+   */
+  checkPasswordsMatch(passFormFieldName: string, confirmPass2FormFieldName) {
+    return !this.checkRequiredInvalid(confirmPass2FormFieldName) && (this.getFormFieldProperty(confirmPass2FormFieldName, 'touched') && this.getFormFieldProperty(confirmPass2FormFieldName, 'changed') && this.getFormFieldProperty(passFormFieldName) !== this.getFormFieldProperty(confirmPass2FormFieldName));
+  }
+
+  /**
    * Updates the form value in the state.
    * @param {React.FormEvent<HTMLInputElement>} event 
    */
@@ -66,19 +87,19 @@ class Login extends React.Component<{}, ILoginForm> {
     event.persist();
     const formField: string = event.currentTarget.id;
     const newFormFieldValue: string = event.currentTarget.value;
-    this.setState((state: ILoginForm) => {
-      return {
-        ...state,
-        formFields: {
-          ...state.formFields,
-          [formField]: {
-            ...state.formFields[formField],
-            changed: true,
-            value: newFormFieldValue
+      this.setState((state: ISignupForm) => {
+        return {
+          ...state,
+          formFields: {
+            ...state.formFields,
+            [formField]: {
+              ...state.formFields[formField],
+              changed: true,
+              value: newFormFieldValue
+            }
           }
         }
-      }
-    });
+      });
   }
 
   /**
@@ -87,7 +108,7 @@ class Login extends React.Component<{}, ILoginForm> {
    */
   handleBlurEvent(event: React.FocusEvent) {
     event.persist();
-    this.setState((state: ILoginForm) => {
+    this.setState((state: ISignupForm) => {
       const formField: string = event.target.id;
       return {
         ...state,
@@ -108,7 +129,7 @@ class Login extends React.Component<{}, ILoginForm> {
    */
   handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    this.setState((state: ILoginForm) => {
+    this.setState((state: ISignupForm) => {
       return {
         ...state,
         submitted: true
@@ -119,15 +140,27 @@ class Login extends React.Component<{}, ILoginForm> {
   render() {
     return (
       <Layout>
-        <SEO title="Login" />
+        <SEO title="Signup" />
         <div className="w-full max-w-sm mx-auto">
           <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4" onSubmit={this.handleSubmit}>
             <div className="flex justify-center mb-6">
-              <h1 className="text-2xl">Log in to your account</h1>
+              <h1 className="text-2xl">Sign up for an account</h1>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="firstName">
+                First Name
+              </label>
+              <input id="firstName" type="text" placeholder="First Name" value={this.getFormFieldProperty('firstName')} onChange={this.handleInputChange} />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="lastName">
+                Last Name
+              </label>
+              <input id="lastName" type="text" placeholder="Last Name" value={this.getFormFieldProperty('lastName')} onChange={this.handleInputChange} />
             </div>
             <div className="mb-4">
               <label htmlFor="email">
-                Email
+                Email *
               </label>
               <input id="email" type="text" placeholder="Email" value={this.getFormFieldProperty('email')} onChange={this.handleInputChange} onBlur={this.handleBlurEvent} />
               <p className={`error-msg ${this.checkRequiredInvalid('email') || this.checkEmailInvalid('email') ? 'show' : ''}`}>
@@ -142,20 +175,25 @@ class Login extends React.Component<{}, ILoginForm> {
               <input id="password" type="password" placeholder="******************" value={this.getFormFieldProperty('password')} onChange={this.handleInputChange} />
               <p className={`error-msg ${this.checkRequiredInvalid('password') ? 'show' : ''}`}>This field is required.</p>
             </div>
-            <div className="flex justify-end mb-6">
-              <Link to="/forgot-password" className="link">
-                Forgot Password?
-              </Link>
+            <div className="mb-6">
+              <label htmlFor="password">
+                Confirm Password
+              </label>
+              <input id="confirmPassword" type="password" placeholder="******************" value={this.getFormFieldProperty('confirmPassword')} onChange={this.handleInputChange} onBlur={this.handleBlurEvent} />
+              <p className={`error-msg ${this.checkRequiredInvalid('confirmPassword') || this.checkPasswordsMatch('password', 'confirmPassword') ? 'show' : ''}`}>
+                { this.checkRequiredInvalid('confirmPassword') ? 'This field is required.' : '' }
+                { this.checkPasswordsMatch('password', 'confirmPassword') ? 'Your passwords do not match.' : '' }
+              </p>
             </div>
             <div className="flex justify-center mb-6">
               <button className="btn-primary w-full" type="submit">
-                Log In
+                Sign up
               </button>
             </div>
             <hr className="mb-6"/>
             <div className="flex justify-center">
-              <Link to="/signup" className="link">
-                Sign up for an account
+              <Link to="/login" className="link">
+                Already have an account? Log in
               </Link>
             </div>
           </form>
@@ -165,4 +203,4 @@ class Login extends React.Component<{}, ILoginForm> {
   }
 }
 
-export default Login;
+export default Signup;

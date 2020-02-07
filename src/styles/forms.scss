@@ -1,12 +1,27 @@
 // Default input style
 input {
   @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight transition duration-200 ease-linear;
+  @apply relative z-20;
   &:focus {
     @apply outline-none shadow-outline;
   }
 }
 
+// Default label style
+label {
+  @apply block text-gray-700 text-sm font-bold mb-2;
+}
+
 // Default form input error style
 .error-msg {
   @apply text-red-500 text-xs italic mt-1;
+  @apply relative z-10;
+  top: -1.5rem;
+  height: 0px;
+  @apply transition-all duration-200;
+  &.show {
+    top: 0;
+    height: 1rem;
+    @apply transition-all duration-200;
+  }
 }

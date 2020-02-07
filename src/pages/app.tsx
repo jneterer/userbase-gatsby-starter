@@ -8,12 +8,14 @@ import Layout from "../components/layout"
 import IndexPage from ".";
 import Login from "./login";
 import NotFoundPage from "./404";
+import Signup from "./signup";
 
 const App = () => (
   <Layout>
     <Router>
       <RouterPage path="/" pageComponent={<IndexPage />} />
       <RouterPage path="/app/login" pageComponent={<Login />} />
+      <RouterPage path="/app/signup" pageComponent={<Signup />} />
       <RouterPage pageComponent={<NotFoundPage />} default={true} />
     </Router>
   </Layout>
