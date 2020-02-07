@@ -5,6 +5,7 @@ import { Router, RouteComponentProps } from "@reach/router"
 import Layout from "../components/layout"
 
 // Pages
+import ForgotPassword from "./forgot-password";
 import IndexPage from ".";
 import Login from "./login";
 import NotFoundPage from "./404";
@@ -15,6 +16,7 @@ const App = () => (
     <Router>
       <RouterPage path="/" pageComponent={<IndexPage />} />
       <RouterPage path="/app/login" pageComponent={<Login />} />
+      <RouterPage path="/app/forgot-password" pageComponent={<ForgotPassword />} />
       <RouterPage path="/app/signup" pageComponent={<Signup />} />
       <RouterPage pageComponent={<NotFoundPage />} default={true} />
     </Router>

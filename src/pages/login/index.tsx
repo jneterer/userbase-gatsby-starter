@@ -121,7 +121,7 @@ class Login extends React.Component<{}, ILoginForm> {
       <Layout>
         <SEO title="Log in" />
         <div className="w-full max-w-sm mx-auto">
-          <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4" onSubmit={this.handleSubmit}>
+          <form className="auth-form" onSubmit={this.handleSubmit}>
             <div className="flex justify-center mb-6">
               <h1 className="text-2xl">Log in to your account</h1>
             </div>
@@ -144,12 +144,12 @@ class Login extends React.Component<{}, ILoginForm> {
             </div>
             <div className="flex justify-end mb-6">
               <Link to="/forgot-password" className="link">
-                Forgot Password?
+                Forgot password?
               </Link>
             </div>
             <div className="flex justify-center mb-6">
               <button className="btn-primary w-full" type="submit">
-                Log In
+                Log in
               </button>
             </div>
             <hr className="mb-6"/>

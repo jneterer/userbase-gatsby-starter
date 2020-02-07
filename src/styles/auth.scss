@@ -1,0 +1,6 @@
+.auth-form {
+  @apply mb-4;
+  @screen sm {
+    @apply bg-white shadow-lg rounded px-8 pt-6 pb-8;
+  }
+}
