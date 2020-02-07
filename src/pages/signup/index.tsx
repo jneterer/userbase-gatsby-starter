@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, FormEvent, ChangeEvent } from "react";
+import React, { FormEvent } from "react";
 import { Link } from "gatsby";
 
 // Components
@@ -140,7 +140,7 @@ class Signup extends React.Component<{}, ISignupForm> {
   render() {
     return (
       <Layout>
-        <SEO title="Signup" />
+        <SEO title="Sign up" />
         <div className="w-full max-w-sm mx-auto">
           <form className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4" onSubmit={this.handleSubmit}>
             <div className="flex justify-center mb-6">
