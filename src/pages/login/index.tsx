@@ -6,24 +6,19 @@ import Layout from "../../components/layout";
 import SEO from "../../components/seo";
 
 // Types
-import { IFormField } from "../../types/iform-field";
+import { Form } from "../../types/forms/Form";
+import { FormField } from "../../types/forms/FormField";
 import { ILoginForm } from "./ilogin-form";
+import { Validators } from "../../types/forms/Validators";
 
 class Login extends React.Component<{}, ILoginForm> {
   constructor(props) {
     super(props);
     this.state = {
-      formFields: {
-        email: {
-          name: 'email',
-          value: ''
-        },
-        password: {
-          name: 'password',
-          value: ''
-        }
-      },
-      submitted: false
+      loginForm: new Form([
+        new FormField('email', '', [Validators.required, Validators.email]),
+        new FormField('password', '', [Validators.required])
+      ])
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleBlurEvent = this.handleBlurEvent.bind(this);
@@ -31,87 +26,49 @@ class Login extends React.Component<{}, ILoginForm> {
   }
 
   /**
-   * Gets a property value of a form field given its name.
-   * @param {string} formFieldName The name of the form field.
-   * @param {string} [property=value] The property we want to retrieve from the form field by default set as value.
-   * @returns {string}
-   */
-  getFormFieldProperty(formFieldName: string, property: keyof IFormField = 'value') {
-    return this.state.formFields[formFieldName][property];
-  }
-
-  /**
-   * Checks if a required form field is invalid given its name.
-   * @param {string} formFieldName The name of the form field.
-   * @returns {boolean} Returns true if the form has been submitted and the form field is still blank.
-   */
-  checkRequiredInvalid(formFieldName: string) {
-    return this.state.submitted && this.getFormFieldProperty(formFieldName) === '';
-  }
-
-  /**
-   * Checks if a form field of type email is invalid given its name.
-   * @param {string} formFieldName The name of the form field.
-   * @returns {boolean} Returns true if the form field is not already invalid, has been touched (focused on and then blurred), changed, and does not match the email regex pattern.
-   */
-  checkEmailInvalid(formFieldName: string) {
-    return !this.checkRequiredInvalid(formFieldName) && this.getFormFieldProperty(formFieldName, 'touched') && this.getFormFieldProperty(formFieldName, 'changed') && !this.getFormFieldProperty(formFieldName).match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
-  }
-
-  /**
-   * Updates the form value in the state.
+   * Sets the form value in the state.
    * @param {React.FormEvent<HTMLInputElement>} event 
    */
   handleInputChange(event: React.FormEvent<HTMLInputElement>) {
     event.persist();
-    const formField: string = event.currentTarget.id;
+    const formFieldName: string = event.currentTarget.id;
     const newFormFieldValue: string = event.currentTarget.value;
+    let loginForm: Form = this.state.loginForm;
+    loginForm.setFormFieldValue(formFieldName, newFormFieldValue);
     this.setState((state: ILoginForm) => {
       return {
-        ...state,
-        formFields: {
-          ...state.formFields,
-          [formField]: {
-            ...state.formFields[formField],
-            changed: true,
-            value: newFormFieldValue
-          }
-        }
+        loginForm: loginForm
       }
     });
   }
 
   /**
-   * Updates the touch attribute for a form field.
+   * Sets the touched attribute for a form field.
    * @param {React.FocusEvent} event 
    */
   handleBlurEvent(event: React.FocusEvent) {
     event.persist();
+    const formFieldName: string = event.target.id;
+    let loginForm: Form = this.state.loginForm;
+    loginForm.setFormFieldTouched(formFieldName, true);
     this.setState((state: ILoginForm) => {
-      const formField: string = event.target.id;
       return {
-        ...state,
-        formFields: {
-          ...state.formFields,
-          [formField]: {
-            ...state.formFields[formField],
-            touched: true
-          }
-        }
+        loginForm: loginForm
       }
     });
   }
 
   /**
-   * Signs the user up.
+   * Logs the user into the web app.
    * @param {React.FormEvent<HTMLFormElement>} event 
    */
   handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    let loginForm: Form = this.state.loginForm;
+    loginForm.setSubmitted(true);
     this.setState((state: ILoginForm) => {
       return {
-        ...state,
-        submitted: true
+        loginForm: loginForm
       }
     });
   }
@@ -129,18 +86,18 @@ class Login extends React.Component<{}, ILoginForm> {
               <label htmlFor="email">
                 Email
               </label>
-              <input id="email" type="text" placeholder="Email" value={this.getFormFieldProperty('email')} onChange={this.handleInputChange} onBlur={this.handleBlurEvent} />
-              <p className={`error-msg ${this.checkRequiredInvalid('email') || this.checkEmailInvalid('email') ? 'show' : ''}`}>
-                { this.checkRequiredInvalid('email') ? 'This field is required.' : '' }
-                { this.checkEmailInvalid('email') ? 'Please provide a valid email address.' : '' }
+              <input id="email" type="text" placeholder="Email" value={this.state.loginForm.getFormField('email').getValue()} onChange={this.handleInputChange} onBlur={this.handleBlurEvent} />
+              <p className={`error-msg ${this.state.loginForm.getFormField('email').getError() === Validators.required || this.state.loginForm.getFormField('email').getError() === Validators.email ? 'show' : ''}`}>
+                { this.state.loginForm.getFormField('email').getError() === Validators.required ? 'This field is required.' : '' }
+                { this.state.loginForm.getFormField('email').getError() === Validators.email ? 'Please provide a valid email address.' : '' }
               </p>
             </div>
             <div className="mb-4">
               <label htmlFor="password">
                 Password
               </label>
-              <input id="password" type="password" placeholder="******************" value={this.getFormFieldProperty('password')} onChange={this.handleInputChange} />
-              <p className={`error-msg ${this.checkRequiredInvalid('password') ? 'show' : ''}`}>This field is required.</p>
+              <input id="password" type="password" placeholder="******************" value={this.state.loginForm.getFormField('password').getValue()} onChange={this.handleInputChange} />
+              <p className={`error-msg ${this.state.loginForm.getFormField('password').getError() === Validators.required ? 'show' : ''}`}>This field is required.</p>
             </div>
             <div className="flex justify-end mb-6">
               <Link to="/forgot-password" className="link">

@@ -1,8 +1,5 @@
-import { IForm } from "../../types/iform";
-import { IFormField } from "../../types/iform-field";
+import { Form } from "../../types/forms/Form";
 
-export interface IForgotPasswordForm extends IForm {
-  formFields: {
-    email: IFormField;
-  };
+export interface IForgotPasswordForm {
+  forgotPasswordForm: Form;
 }

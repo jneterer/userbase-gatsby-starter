@@ -1,12 +1,5 @@
-import { IForm } from "../../types/iform";
-import { IFormField } from "../../types/iform-field";
+import { Form } from "../../types/forms/Form";
 
-export interface ISignupForm extends IForm {
-  formFields: {
-    firstName: IFormField;
-    lastName: IFormField;
-    email: IFormField;
-    password: IFormField;
-    confirmPassword: IFormField;
-  };
+export interface ISignupForm {
+  signupForm: Form;
 }

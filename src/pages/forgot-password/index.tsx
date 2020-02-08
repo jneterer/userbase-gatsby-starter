@@ -6,20 +6,18 @@ import Layout from "../../components/layout";
 import SEO from "../../components/seo";
 
 // Types
+import { Form } from "../../types/forms/Form";
+import { FormField } from "../../types/forms/FormField";
 import { IForgotPasswordForm } from "./iforgot-password-form";
-import { IFormField } from "../../types/iform-field";
+import { Validators } from "../../types/forms/Validators";
 
 class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
   constructor(props) {
     super(props);
     this.state = {
-      formFields: {
-        email: {
-          name: 'email',
-          value: ''
-        }
-      },
-      submitted: false
+      forgotPasswordForm: new Form([
+        new FormField('email', '', [Validators.required, Validators.email])
+      ])
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleBlurEvent = this.handleBlurEvent.bind(this);
@@ -27,87 +25,49 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
   }
 
   /**
-   * Gets a property value of a form field given its name.
-   * @param {string} formFieldName The name of the form field.
-   * @param {string} [property=value] The property we want to retrieve from the form field by default set as value.
-   * @returns {string}
-   */
-  getFormFieldProperty(formFieldName: string, property: keyof IFormField = 'value') {
-    return this.state.formFields[formFieldName][property];
-  }
-
-  /**
-   * Checks if a required form field is invalid given its name.
-   * @param {string} formFieldName The name of the form field.
-   * @returns {boolean} Returns true if the form has been submitted and the form field is still blank.
-   */
-  checkRequiredInvalid(formFieldName: string) {
-    return this.state.submitted && this.getFormFieldProperty(formFieldName) === '';
-  }
-
-  /**
-   * Checks if a form field of type email is invalid given its name.
-   * @param {string} formFieldName The name of the form field.
-   * @returns {boolean} Returns true if the form field is not already invalid, has been touched (focused on and then blurred), changed, and does not match the email regex pattern.
-   */
-  checkEmailInvalid(formFieldName: string) {
-    return !this.checkRequiredInvalid(formFieldName) && this.getFormFieldProperty(formFieldName, 'touched') && this.getFormFieldProperty(formFieldName, 'changed') && !this.getFormFieldProperty(formFieldName).match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
-  }
-
-  /**
-   * Updates the form value in the state.
+   * Sets the form value in the state.
    * @param {React.FormEvent<HTMLInputElement>} event 
    */
   handleInputChange(event: React.FormEvent<HTMLInputElement>) {
     event.persist();
-    const formField: string = event.currentTarget.id;
+    const formFieldName: string = event.currentTarget.id;
     const newFormFieldValue: string = event.currentTarget.value;
+    let forgotPasswordForm: Form = this.state.forgotPasswordForm;
+    forgotPasswordForm.setFormFieldValue(formFieldName, newFormFieldValue);
     this.setState((state: IForgotPasswordForm) => {
       return {
-        ...state,
-        formFields: {
-          ...state.formFields,
-          [formField]: {
-            ...state.formFields[formField],
-            changed: true,
-            value: newFormFieldValue
-          }
-        }
+        forgotPasswordForm: forgotPasswordForm
       }
     });
   }
 
   /**
-   * Updates the touch attribute for a form field.
+   * Sets the touched attribute for a form field.
    * @param {React.FocusEvent} event 
    */
   handleBlurEvent(event: React.FocusEvent) {
     event.persist();
+    const formFieldName: string = event.target.id;
+    let forgotPasswordForm: Form = this.state.forgotPasswordForm;
+    forgotPasswordForm.setFormFieldTouched(formFieldName, true);
     this.setState((state: IForgotPasswordForm) => {
-      const formField: string = event.target.id;
       return {
-        ...state,
-        formFields: {
-          ...state.formFields,
-          [formField]: {
-            ...state.formFields[formField],
-            touched: true
-          }
-        }
+        forgotPasswordForm: forgotPasswordForm
       }
     });
   }
 
   /**
-   * Signs the user up.
+   * Submits a request for password recovery.
    * @param {React.FormEvent<HTMLFormElement>} event 
    */
   handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    let forgotPasswordForm: Form = this.state.forgotPasswordForm;
+    forgotPasswordForm.setSubmitted(true);
     this.setState((state: IForgotPasswordForm) => {
       return {
-        ...state,
-        submitted: true
+        forgotPasswordForm: forgotPasswordForm
       }
     });
   }
@@ -125,10 +85,10 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
               <label htmlFor="email">
                 Email
               </label>
-              <input id="email" type="text" placeholder="Email" value={this.getFormFieldProperty('email')} onChange={this.handleInputChange} onBlur={this.handleBlurEvent} />
-              <p className={`error-msg ${this.checkRequiredInvalid('email') || this.checkEmailInvalid('email') ? 'show' : ''}`}>
-                { this.checkRequiredInvalid('email') ? 'This field is required.' : '' }
-                { this.checkEmailInvalid('email') ? 'Please provide a valid email address.' : '' }
+              <input id="email" type="text" placeholder="Email" value={this.state.forgotPasswordForm.getFormField('email').getValue()} onChange={this.handleInputChange} onBlur={this.handleBlurEvent} />
+              <p className={`error-msg ${this.state.forgotPasswordForm.getFormField('email').getError() === Validators.required || this.state.forgotPasswordForm.getFormField('email').getError() === Validators.email ? 'show' : ''}`}>
+                { this.state.forgotPasswordForm.getFormField('email').getError() === Validators.required ? 'This field is required.' : '' }
+                { this.state.forgotPasswordForm.getFormField('email').getError() === Validators.email ? 'Please provide a valid email address.' : '' }
               </p>
             </div>
             <div className="flex justify-center mb-6">
