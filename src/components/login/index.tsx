@@ -75,7 +75,7 @@ class Login extends React.Component<{}, ILoginForm> {
 
   render() {
     return (
-      <Layout>
+      <>
         <SEO title="Log in" />
         <div className="w-full max-w-sm mx-auto">
           <form className="auth-form" onSubmit={this.handleSubmit}>
@@ -100,7 +100,7 @@ class Login extends React.Component<{}, ILoginForm> {
               <p className={`error-msg ${this.state.loginForm.getFormField('password').getError() === Validators.required ? 'show' : ''}`}>This field is required.</p>
             </div>
             <div className="flex justify-end mb-6">
-              <Link to="/forgot-password" className="link">
+              <Link to="/auth/forgot-password" className="link">
                 Forgot password?
               </Link>
             </div>
@@ -111,13 +111,13 @@ class Login extends React.Component<{}, ILoginForm> {
             </div>
             <hr className="mb-6"/>
             <div className="flex justify-center">
-              <Link to="/signup" className="link">
+              <Link to="/auth/signup" className="link">
                 Sign up for an account
               </Link>
             </div>
           </form>
         </div>
-      </Layout>
+      </>
     );
   }
 }

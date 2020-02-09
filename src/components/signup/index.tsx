@@ -78,7 +78,7 @@ class Signup extends React.Component<{}, ISignupForm> {
 
   render() {
     return (
-      <Layout>
+      <>
         <SEO title="Sign up" />
         <div className="w-full max-w-sm mx-auto">
           <form className="auth-form" onSubmit={this.handleSubmit}>
@@ -131,13 +131,13 @@ class Signup extends React.Component<{}, ISignupForm> {
             </div>
             <hr className="mb-6"/>
             <div className="flex justify-center">
-              <Link to="/login" className="link">
+              <Link to="/auth/login" className="link">
                 Already have an account? Log in
               </Link>
             </div>
           </form>
         </div>
-      </Layout>
+      </>
     );
   }
 }

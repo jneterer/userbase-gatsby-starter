@@ -2,7 +2,6 @@ import React, { FormEvent } from "react";
 import { Link } from "gatsby";
 
 // Components
-import Layout from "../../components/layout";
 import SEO from "../../components/seo";
 
 // Types
@@ -74,7 +73,7 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
 
   render() {
     return (
-      <Layout>
+      <>
         <SEO title="Forgot Password" />
         <div className="w-full max-w-sm mx-auto">
           <form className="auth-form" onSubmit={this.handleSubmit}>
@@ -98,13 +97,13 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
             </div>
             <hr className="mb-6"/>
             <div className="flex justify-center">
-              <Link to="/login" className="link">
+              <Link to="/auth/login" className="link">
                 Back to log in
               </Link>
             </div>
           </form>
         </div>
-      </Layout>
+      </>
     );
   }
 }
