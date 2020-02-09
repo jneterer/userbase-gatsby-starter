@@ -131,7 +131,7 @@ class Signup extends React.Component<{}, ISignupForm> {
             </div>
             <hr className="mb-6"/>
             <div className="flex justify-center">
-              <Link to="/auth/login" className="link">
+              <Link to="/app/login" className="link">
                 Already have an account? Log in
               </Link>
             </div>

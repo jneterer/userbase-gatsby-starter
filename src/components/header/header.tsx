@@ -18,7 +18,7 @@ const Header = ({ siteTitle }) => (
         {siteTitle}
       </Link>
     </h1>
-    <Link to="/auth/login">
+    <Link to="/app/login">
       <button className="btn-secondary">
         Login
       </button>
