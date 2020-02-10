@@ -1,8 +1,8 @@
 import React, { FormEvent } from "react";
-import { Link } from "gatsby";
+import { Link, navigate } from "gatsby";
+import userbase from "userbase-js"
 
 // Components
-import Layout from "../../components/layout";
 import SEO from "../../components/seo";
 
 // Types
@@ -10,6 +10,7 @@ import { Form } from "../../types/forms/Form";
 import { FormField } from "../../types/forms/FormField";
 import { ILoginForm } from "./ilogin-form";
 import { Validators } from "../../types/forms/Validators";
+import Layout from "../layout";
 
 class Login extends React.Component<{}, ILoginForm> {
   constructor(props) {
@@ -66,16 +67,21 @@ class Login extends React.Component<{}, ILoginForm> {
     event.preventDefault();
     let loginForm: Form = this.state.loginForm;
     loginForm.setSubmitted(true);
-    this.setState((state: ILoginForm) => {
-      return {
-        loginForm: loginForm
-      }
-    });
+    this.setState({ loginForm: loginForm });
+    const username = this.state.loginForm.getFormField('email').getValue();
+    const password = this.state.loginForm.getFormField('password').getValue();
+    userbase.signIn({ username, password, rememberMe: 'session' })
+      .then((user) => {
+        navigate('/app/todo');
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   render() {
     return (
-      <>
+      <Layout>
         <SEO title="Log in" />
         <div className="w-full max-w-sm mx-auto">
           <form className="auth-form" onSubmit={this.handleSubmit}>
@@ -117,7 +123,7 @@ class Login extends React.Component<{}, ILoginForm> {
             </div>
           </form>
         </div>
-      </>
+      </Layout>
     );
   }
 }

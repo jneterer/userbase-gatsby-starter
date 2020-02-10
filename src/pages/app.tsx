@@ -1,9 +1,13 @@
 import React from "react"
 import { Router, RouteComponentProps, Redirect } from "@reach/router"
 
+// Auth
+import PrivateRoute from "../components/auth/private-route"
+import PublicRoute from "../components/auth/public-route"
+
 // Components
+import Todo from "../components/todo"
 import ForgotPassword from "../components/forgot-password"
-import Layout from "../components/layout"
 import Login from "../components/login"
 import Signup from "../components/signup"
 
@@ -11,23 +15,18 @@ import Signup from "../components/signup"
 import IndexPage from "."
 
 class App extends React.Component<{}> {
-  componentDidMount() {
-  }
-
   render() {
     return (
-      <Layout>
-        <Router>
-          <RouterPage path="/" pageComponent={<IndexPage />} />
-          <RouterPage path="/app/login" pageComponent={<Login />} />
-          <RouterPage path="/app/forgot-password" pageComponent={<ForgotPassword />} />
-          <RouterPage path="/app/signup" pageComponent={<Signup />} />
-          <RouterPage default={true} pageComponent={<Redirect to="/app/login" noThrow />} />
-        </Router>
-      </Layout>
+      <Router>
+        <RouterPage path="/" pageComponent={<IndexPage />} />
+        <PublicRoute path="/app/login" component={Login} />
+        <PublicRoute path="/app/forgot-password" component={ForgotPassword} />
+        <PublicRoute path="/app/signup" component={Signup} />
+        <PrivateRoute path="/app/todo" component={Todo} />
+        <RouterPage default={true} pageComponent={<Redirect to="/app/login" noThrow />} />
+      </Router>
     )
   }
-
 }
 
 export default App

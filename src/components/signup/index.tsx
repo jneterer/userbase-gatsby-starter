@@ -1,8 +1,8 @@
 import React, { FormEvent } from "react";
 import { Link } from "gatsby";
+import userbase from "userbase-js"
 
 // Components
-import Layout from "../../components/layout";
 import SEO from "../../components/seo";
 
 // Types
@@ -10,6 +10,7 @@ import { Form } from "../../types/forms/Form";
 import { FormField } from "../../types/forms/FormField";
 import { ISignupForm } from "./isignup-form";
 import { Validators } from "../../types/forms/Validators";
+import Layout from "../layout";
 
 class Signup extends React.Component<{}, ISignupForm> {
   constructor(props) {
@@ -74,11 +75,18 @@ class Signup extends React.Component<{}, ISignupForm> {
         signupForm: signupForm
       }
     });
+
+    const username = this.state.signupForm.getFormField('email').getValue();
+    const password = this.state.signupForm.getFormField('password').getValue();
+
+    userbase.signUp({ username, password, rememberMe: 'none' })
+      .then((user) => alert('You signed up!'))
+      .catch((e) => document.getElementById('signup-error').innerHTML = e)
   }
 
   render() {
     return (
-      <>
+      <Layout>
         <SEO title="Sign up" />
         <div className="w-full max-w-sm mx-auto">
           <form className="auth-form" onSubmit={this.handleSubmit}>
@@ -137,7 +145,7 @@ class Signup extends React.Component<{}, ISignupForm> {
             </div>
           </form>
         </div>
-      </>
+      </Layout>
     );
   }
 }

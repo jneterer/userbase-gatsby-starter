@@ -6,7 +6,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import Header from "./header/header"
 import Footer from "./footer/footer"
 
-const Layout = ({ children }) => {
+const Layout = ({ children, ...rest }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -16,10 +16,9 @@ const Layout = ({ children }) => {
       }
     }
   `)
-
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata.title} />
+      <Header siteTitle={data.site.siteMetadata.title} {...rest} />
       <div className="top-20 relative sm:px-20 px-10 py-10">
         <main>{children}</main>
         <Footer />
@@ -30,6 +29,11 @@ const Layout = ({ children }) => {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  user: PropTypes.object,
+}
+
+Layout.defaultProps = {
+  user: null
 }
 
 export default Layout
