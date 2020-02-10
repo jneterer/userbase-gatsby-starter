@@ -3,11 +3,11 @@ import { Redirect } from "@reach/router"
 import userbase from "userbase-js"
 
 // Components
-import Layout from "../layout";
+import Layout from "../../layout";
 
 // Types
-import { IAuthRouteProps } from "./IAuthRouteProps"
-import { IAuthRouteState } from "./IAuthRouteState"
+import { IAuthRouteProps } from "../../../types/auth/IAuthRouteProps"
+import { IAuthRouteState } from "../../../types/auth/IAuthRouteState"
 
 class PrivateRoute extends React.Component<IAuthRouteProps, IAuthRouteState> {
   constructor(props) {
