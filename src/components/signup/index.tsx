@@ -99,8 +99,10 @@ class Signup extends React.Component<{}, ISignupForm> {
         signupDto.profile.firstName = firstName;
         signupDto.profile.lastName = lastName;
       } else if (firstName) {
+        delete signupDto.profile.lastName;
         signupDto.profile.firstName = firstName;
       } else if (lastName) {
+        delete signupDto.profile.firstName;
         signupDto.profile.lastName = lastName;
       } else {
         signupDto.profile = null;

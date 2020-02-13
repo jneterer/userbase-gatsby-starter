@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, FocusEvent } from "react";
 import { Link } from "gatsby";
 import userbase from "userbase-js"
 
@@ -30,9 +30,9 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
 
   /**
    * Sets the form value in the state.
-   * @param {React.FormEvent<HTMLInputElement>} event 
+   * @param {FormEvent<HTMLInputElement>} event 
    */
-  handleInputChange(event: React.FormEvent<HTMLInputElement>) {
+  handleInputChange(event: FormEvent<HTMLInputElement>) {
     event.persist();
     const formFieldName: string = event.currentTarget.id;
     const newFormFieldValue: string = event.currentTarget.value;
@@ -48,9 +48,9 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
 
   /**
    * Sets the touched attribute for a form field.
-   * @param {React.FocusEvent} event 
+   * @param {FocusEvent} event 
    */
-  handleBlurEvent(event: React.FocusEvent) {
+  handleBlurEvent(event: FocusEvent) {
     event.persist();
     const formFieldName: string = event.target.id;
     let forgotPasswordForm: Form = this.state.forgotPasswordForm;
@@ -65,9 +65,9 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
 
   /**
    * Submits a request for password recovery.
-   * @param {React.FormEvent<HTMLFormElement>} event 
+   * @param {FormEvent<HTMLFormElement>} event 
    */
-  handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     let forgotPasswordForm: Form = this.state.forgotPasswordForm;
     forgotPasswordForm.setSubmitted(true);

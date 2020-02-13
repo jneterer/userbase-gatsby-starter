@@ -113,8 +113,10 @@ class Profile extends React.Component<{ user: UserResult}, IProfileForms> {
           updateAccountInfoDto.profile.firstName = firstName;
           updateAccountInfoDto.profile.lastName = lastName;
         } else if (firstName) {
+          delete updateAccountInfoDto.profile.lastName;
           updateAccountInfoDto.profile.firstName = firstName;
         } else if (lastName) {
+          delete updateAccountInfoDto.profile.firstName;
           updateAccountInfoDto.profile.lastName = lastName;
         } else {
           updateAccountInfoDto.profile = null;
@@ -148,9 +150,12 @@ class Profile extends React.Component<{ user: UserResult}, IProfileForms> {
         };
         userbase.updateUser(updateAccountInfoDto)
         .then(() => {
+          let changePasswordForm: Form = this.state.changePasswordForm;
+          changePasswordForm.resetForm();
           this.setState((state) => {
             return {
               ...state,
+              changePasswordForm: changePasswordForm,
               changePasswordFormSuccess: true,
               changePasswordFormError: null
             };

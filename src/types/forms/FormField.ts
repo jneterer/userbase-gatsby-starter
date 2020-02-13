@@ -181,4 +181,19 @@ export class FormField {
     this.properties.error = error;
   }
 
+  /**
+   * Resets the form field back to its original state. This will overwrite any initial default
+   * value for the form field but persist the validators and name.
+   */
+  resetFormField(): void {
+    this.properties = {
+      ...this.properties,
+      value: '',
+      changed: false,
+      touched: false,
+      error: Validators.none,
+      valid: true
+    };
+  }
+
 }

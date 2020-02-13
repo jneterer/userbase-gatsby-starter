@@ -112,8 +112,22 @@ export class Form {
    */
   private checkFormIsValid() {
     this.properties.valid = Object.keys(this.formFields).filter((formFieldName: string) => {
-      return !this.getFormField(formFieldName).value
+      return !this.getFormField(formFieldName).valid
     }).length === 0;
+  }
+
+  /**
+   * Resets the form back to its original state.
+   */
+  resetForm(): void {
+    Object.keys(this.formFields).forEach((formFieldName: string) => {
+      this.getFormField(formFieldName).resetFormField();
+    });
+    this.properties = {
+      changed: false,
+      valid: true,
+      submitted: false
+    };
   }
 
 }

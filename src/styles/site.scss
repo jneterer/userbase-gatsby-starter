@@ -63,6 +63,9 @@ a {
   &-error {
     @include btn-style('colors.red.600', 'colors.red.700', 'colors.white');
   }
+  &-icon {
+    @apply rounded-full h-6 w-6 flex items-center justify-center;
+  }
 }
 
 button:disabled {
