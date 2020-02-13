@@ -1,16 +1,16 @@
-import React from "react"
-import { Router, RouteComponentProps, Redirect } from "@reach/router"
+import React from "react";
+import { Router, RouteComponentProps, Redirect } from "@reach/router";
 
 // Auth
-import PrivateRoute from "../components/auth/private-route"
-import PublicRoute from "../components/auth/public-route"
+import PrivateRoute from "../components/auth/private-route";
+import PublicRoute from "../components/auth/public-route";
 
 // Components
-import ForgotPassword from "../components/forgot-password"
-import Login from "../components/login"
-import Profile from "../components/profile"
-import Signup from "../components/signup"
-import Todo from "../components/todo"
+import ForgotPassword from "../components/forgot-password";
+import Login from "../components/login";
+import Profile from "../components/profile";
+import Signup from "../components/signup";
+import Todo from "../components/todo";
 
 // Pages
 import IndexPage from "."

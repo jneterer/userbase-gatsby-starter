@@ -1,6 +1,6 @@
 import React, { FormEvent, FocusEvent } from "react";
 import { Link, navigate } from "gatsby";
-import userbase, { UserResult } from "userbase-js"
+import userbase, { UserResult } from "userbase-js";
 
 // Components
 import Layout from "../layout";
@@ -11,10 +11,10 @@ import { Form } from "../../types/forms/Form";
 import { FormField } from "../../types/forms/FormField";
 import { IError } from "../../types/userbase/IError";
 import { ISignupDto } from "../../types/userbase/ISignupDto";
-import { ISignupForm } from "./isignup-form";
+import { ISignupState } from "../../types/signup/isignup-state";
 import { Validators } from "../../types/forms/Validators";
 
-class Signup extends React.Component<{}, ISignupForm> {
+class Signup extends React.Component<{}, ISignupState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,7 +43,7 @@ class Signup extends React.Component<{}, ISignupForm> {
     const newFormFieldValue: string = event.currentTarget.value;
     let signupForm: Form = this.state.signupForm;
     signupForm.setFormFieldValue(formFieldName, newFormFieldValue);
-    this.setState((state: ISignupForm) => {
+    this.setState((state: ISignupState) => {
       return {
         ...state,
         signupForm: signupForm
@@ -60,7 +60,7 @@ class Signup extends React.Component<{}, ISignupForm> {
     const formFieldName: string = event.target.id;
     let signupForm: Form = this.state.signupForm;
     signupForm.setFormFieldTouched(formFieldName, true);
-    this.setState((state: ISignupForm) => {
+    this.setState((state: ISignupState) => {
       return {
         ...state,
         signupForm: signupForm
@@ -76,7 +76,7 @@ class Signup extends React.Component<{}, ISignupForm> {
     event.preventDefault();
     let signupForm: Form = this.state.signupForm;
     signupForm.setSubmitted(true);
-    this.setState((state: ISignupForm) => {
+    this.setState((state: ISignupState) => {
       return {
         ...state,
         signupForm: signupForm

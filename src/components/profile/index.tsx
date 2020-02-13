@@ -1,21 +1,21 @@
-import React, { MouseEvent, FormEvent, FocusEvent } from "react"
+import React, { MouseEvent, FormEvent, FocusEvent } from "react";
 import { navigate } from "gatsby";
 import { Match } from "@reach/router";
-import userbase, { UserResult } from "userbase-js"
+import userbase, { UserResult } from "userbase-js";
 
 // Components
 import Layout from "../layout";
-import SEO from "../seo";;
+import SEO from "../seo";
 
 // Types
 import { Form } from "../../types/forms/Form";
 import { FormField } from "../../types/forms/FormField";
 import { IError } from "../../types/userbase/IError";
-import { IProfileForms } from "./iprofile";
-import { IUpdateAccountInfoDto } from "../../types/userbase/iupdate-account-info-dto";
+import { IProfileState } from "../../types/profile/iprofile";
+import { IUpdateAccountInfoDto } from "../../types/profile/iupdate-account-info-dto";
 import { Validators } from "../../types/forms/Validators";
 
-class Profile extends React.Component<{ user: UserResult}, IProfileForms> {
+class Profile extends React.Component<{ user: UserResult }, IProfileState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -56,7 +56,7 @@ class Profile extends React.Component<{ user: UserResult}, IProfileForms> {
     const newFormFieldValue: string = event.currentTarget.value;
     let profileForm: Form = this.state[formName];
     profileForm.setFormFieldValue(formFieldName, newFormFieldValue);
-    this.setState((state: IProfileForms) => {
+    this.setState((state: IProfileState) => {
       return {
         ...state,
         [formName]: profileForm
@@ -74,7 +74,7 @@ class Profile extends React.Component<{ user: UserResult}, IProfileForms> {
     const formFieldName: string = event.target.id;
     let profileForm: Form = this.state[formName];
     profileForm.setFormFieldTouched(formFieldName, true);
-    this.setState((state: IProfileForms) => {
+    this.setState((state: IProfileState) => {
       return {
         ...state,
         [formName]: profileForm
@@ -91,7 +91,7 @@ class Profile extends React.Component<{ user: UserResult}, IProfileForms> {
     event.preventDefault();
     let profileForm: Form = this.state[formName];
     profileForm.setSubmitted(true);
-    this.setState((state: IProfileForms) => {
+    this.setState((state: IProfileState) => {
       return {
         ...state,
         [formName]: profileForm

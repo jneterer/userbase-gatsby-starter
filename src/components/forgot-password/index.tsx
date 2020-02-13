@@ -1,6 +1,6 @@
 import React, { FormEvent, FocusEvent } from "react";
 import { Link } from "gatsby";
-import userbase from "userbase-js"
+import userbase from "userbase-js";
 
 // Components
 import Layout from "../layout";
@@ -10,10 +10,10 @@ import SEO from "../../components/seo";
 import { Form } from "../../types/forms/Form";
 import { FormField } from "../../types/forms/FormField";
 import { IError } from "../../types/userbase/IError";
-import { IForgotPasswordForm } from "./iforgot-password-form";
+import { IForgotPasswordState } from "../../types/forgot-password/iforgot-password-form";
 import { Validators } from "../../types/forms/Validators";
 
-class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
+class ForgotPassword extends React.Component<{}, IForgotPasswordState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +38,7 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
     const newFormFieldValue: string = event.currentTarget.value;
     let forgotPasswordForm: Form = this.state.forgotPasswordForm;
     forgotPasswordForm.setFormFieldValue(formFieldName, newFormFieldValue);
-    this.setState((state: IForgotPasswordForm) => {
+    this.setState((state: IForgotPasswordState) => {
       return {
         ...state,
         forgotPasswordForm: forgotPasswordForm
@@ -55,7 +55,7 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
     const formFieldName: string = event.target.id;
     let forgotPasswordForm: Form = this.state.forgotPasswordForm;
     forgotPasswordForm.setFormFieldTouched(formFieldName, true);
-    this.setState((state: IForgotPasswordForm) => {
+    this.setState((state: IForgotPasswordState) => {
       return {
         ...state,
         forgotPasswordForm: forgotPasswordForm
@@ -71,7 +71,7 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
     event.preventDefault();
     let forgotPasswordForm: Form = this.state.forgotPasswordForm;
     forgotPasswordForm.setSubmitted(true);
-    this.setState((state: IForgotPasswordForm) => {
+    this.setState((state: IForgotPasswordState) => {
       return {
         ...state,
         forgotPasswordForm: forgotPasswordForm

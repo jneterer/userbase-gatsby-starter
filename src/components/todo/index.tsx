@@ -9,8 +9,8 @@ import SEO from "../seo";
 import { Form } from "../../types/forms/Form"
 import { FormField } from "../../types/forms/FormField"
 import { IError } from "../../types/userbase/IError"
-import { ITodo } from "./itodo"
-import { ITodoState } from "./itodo-state"
+import { ITodo } from "../../types/todo/itodo";
+import { ITodoState } from "../../types/todo/itodo-state";
 import { Validators } from "../../types/forms/Validators"
 
 class Todo extends React.Component<{ user: UserResult }, ITodoState> {

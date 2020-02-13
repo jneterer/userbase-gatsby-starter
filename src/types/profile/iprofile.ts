@@ -1,7 +1,7 @@
 import { UserResult } from "userbase-js";
-import { Form } from "../../types/forms/Form";
+import { Form } from "../forms/Form";
 
-export interface IProfileForms {
+export interface IProfileState {
   user: UserResult
   accountInfoForm: Form;
   accountInfoFormSuccess: boolean;

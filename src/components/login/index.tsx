@@ -1,6 +1,6 @@
 import React, { FormEvent, FocusEvent } from "react";
 import { Link, navigate } from "gatsby";
-import userbase, { UserResult } from "userbase-js"
+import userbase, { UserResult } from "userbase-js";
 
 // Components
 import Layout from "../layout";
@@ -10,11 +10,11 @@ import SEO from "../../components/seo";
 import { Form } from "../../types/forms/Form";
 import { FormField } from "../../types/forms/FormField";
 import { IError } from "../../types/userbase/IError";
-import { ILoginDto } from "../../types/userbase/ILoginDto";
-import { ILoginForm } from "./ilogin-form";
+import { ILoginDto } from "../../types/login/ilogin-dto";
+import { ILoginState } from "../../types/login/ilogin-form";
 import { Validators } from "../../types/forms/Validators";
 
-class Login extends React.Component<{}, ILoginForm> {
+class Login extends React.Component<{}, ILoginState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,7 +39,7 @@ class Login extends React.Component<{}, ILoginForm> {
     const newFormFieldValue: string = event.currentTarget.value;
     let loginForm: Form = this.state.loginForm;
     loginForm.setFormFieldValue(formFieldName, newFormFieldValue);
-    this.setState((state: ILoginForm) => {
+    this.setState((state: ILoginState) => {
       return {
         ...state,
         loginForm: loginForm
@@ -56,7 +56,7 @@ class Login extends React.Component<{}, ILoginForm> {
     const formFieldName: string = event.target.id;
     let loginForm: Form = this.state.loginForm;
     loginForm.setFormFieldTouched(formFieldName, true);
-    this.setState((state: ILoginForm) => {
+    this.setState((state: ILoginState) => {
       return {
         ...state,
         loginForm: loginForm

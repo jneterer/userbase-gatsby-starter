@@ -1,13 +1,13 @@
-import React from "react"
-import { Redirect } from "@reach/router"
-import userbase from "userbase-js"
+import React from "react";
+import { Redirect } from "@reach/router";
+import userbase from "userbase-js";
 
 // Components
 import Layout from "../../layout";
 
 // Types
-import { IAuthRouteProps } from "../../../types/auth/IAuthRouteProps"
-import { IAuthRouteState } from "../../../types/auth/IAuthRouteState"
+import { IAuthRouteProps } from "../../../types/auth/iauth-route-props";
+import { IAuthRouteState } from "../../../types/auth/iauth-route-state";
 
 class PublicRoute extends React.Component<IAuthRouteProps, IAuthRouteState> {
   constructor(props) {

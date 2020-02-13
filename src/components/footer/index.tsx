@@ -1,7 +1,4 @@
-import React from "react"
-
-// Styles
-import './footer.scss';
+import React from "react";
 
 const Footer = () => (
   <footer className="text-center">

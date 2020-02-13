@@ -1,5 +1,5 @@
 import { UserResult, Item } from "userbase-js";
-import { Form } from "../../types/forms/Form";
+import { Form } from "../forms/Form";
 
 export interface ITodoState {
   user: UserResult;

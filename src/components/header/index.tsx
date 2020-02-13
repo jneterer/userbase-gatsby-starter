@@ -1,11 +1,8 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
-import React from "react"
-import userbase from "userbase-js";
-
-// Styles
-import './header.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "gatsby";
 import { navigate } from "@reach/router";
+import userbase from "userbase-js";
 
 const Header = ({ siteTitle, user }) => (
   <header className="fixed w-full bg-orange.400 h-20 z-50 flex justify-between items-center px-20">
