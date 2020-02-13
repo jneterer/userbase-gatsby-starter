@@ -1,25 +1,28 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, FocusEvent } from "react";
 import { Link, navigate } from "gatsby";
-import userbase from "userbase-js"
+import userbase, { UserResult } from "userbase-js"
 
 // Components
+import Layout from "../layout";
 import SEO from "../../components/seo";
 
 // Types
 import { Form } from "../../types/forms/Form";
 import { FormField } from "../../types/forms/FormField";
+import { IError } from "../../types/userbase/IError";
+import { ILoginDto } from "../../types/userbase/ILoginDto";
 import { ILoginForm } from "./ilogin-form";
 import { Validators } from "../../types/forms/Validators";
-import Layout from "../layout";
 
 class Login extends React.Component<{}, ILoginForm> {
   constructor(props) {
     super(props);
     this.state = {
       loginForm: new Form([
-        new FormField('email', '', [Validators.required, Validators.email]),
+        new FormField('username', '', [Validators.required]),
         new FormField('password', '', [Validators.required])
-      ])
+      ]),
+      loginError: null
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleBlurEvent = this.handleBlurEvent.bind(this);
@@ -28,9 +31,9 @@ class Login extends React.Component<{}, ILoginForm> {
 
   /**
    * Sets the form value in the state.
-   * @param {React.FormEvent<HTMLInputElement>} event 
+   * @param {FormEvent<HTMLInputElement>} event 
    */
-  handleInputChange(event: React.FormEvent<HTMLInputElement>) {
+  handleInputChange(event: FormEvent<HTMLInputElement>) {
     event.persist();
     const formFieldName: string = event.currentTarget.id;
     const newFormFieldValue: string = event.currentTarget.value;
@@ -38,45 +41,57 @@ class Login extends React.Component<{}, ILoginForm> {
     loginForm.setFormFieldValue(formFieldName, newFormFieldValue);
     this.setState((state: ILoginForm) => {
       return {
+        ...state,
         loginForm: loginForm
-      }
+      };
     });
   }
 
   /**
    * Sets the touched attribute for a form field.
-   * @param {React.FocusEvent} event 
+   * @param {FocusEvent} event 
    */
-  handleBlurEvent(event: React.FocusEvent) {
+  handleBlurEvent(event: FocusEvent) {
     event.persist();
     const formFieldName: string = event.target.id;
     let loginForm: Form = this.state.loginForm;
     loginForm.setFormFieldTouched(formFieldName, true);
     this.setState((state: ILoginForm) => {
       return {
+        ...state,
         loginForm: loginForm
-      }
+      };
     });
   }
 
   /**
    * Logs the user into the web app.
-   * @param {React.FormEvent<HTMLFormElement>} event 
+   * @param {FormEvent<HTMLFormElement>} event 
    */
-  handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     let loginForm: Form = this.state.loginForm;
     loginForm.setSubmitted(true);
     this.setState({ loginForm: loginForm });
-    const username = this.state.loginForm.getFormField('email').getValue();
-    const password = this.state.loginForm.getFormField('password').getValue();
-    userbase.signIn({ username, password, rememberMe: 'session' })
-      .then((user) => {
-        navigate('/app/todo');
+    if (this.state.loginForm.valid) {
+      const loginDto: ILoginDto = {
+        username: this.state.loginForm.getFormField('username').value,
+        password: this.state.loginForm.getFormField('password').value,
+        rememberMe: 'local'
+      };
+      userbase.signIn(loginDto)
+      .then((user: UserResult) => {
+        navigate(user['usedTempPassword'] ? '/app/profile/changePasswordNeeded' : '/app/todo');
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error: IError) => {
+        this.setState((state) => {
+          return {
+            ...state,
+            loginError: error.message
+          }
+        });
       });
+    }
   }
 
   render() {
@@ -89,21 +104,22 @@ class Login extends React.Component<{}, ILoginForm> {
               <h1 className="text-2xl">Log in to your account</h1>
             </div>
             <div className="mb-4">
-              <label htmlFor="email">
-                Email
+              <label htmlFor="username">
+                Username
               </label>
-              <input id="email" type="text" placeholder="Email" value={this.state.loginForm.getFormField('email').getValue()} onChange={this.handleInputChange} onBlur={this.handleBlurEvent} />
-              <p className={`error-msg ${this.state.loginForm.getFormField('email').getError() === Validators.required || this.state.loginForm.getFormField('email').getError() === Validators.email ? 'show' : ''}`}>
-                { this.state.loginForm.getFormField('email').getError() === Validators.required ? 'This field is required.' : '' }
-                { this.state.loginForm.getFormField('email').getError() === Validators.email ? 'Please provide a valid email address.' : '' }
+              <input id="username" type="text" placeholder="Username" value={this.state.loginForm.getFormField('username').value} onChange={this.handleInputChange} onBlur={this.handleBlurEvent} />
+              <p className={`error-msg ${this.state.loginForm.getFormField('username').error !== Validators.none ? 'show' : ''}`}>
+                This field is required.
               </p>
             </div>
             <div className="mb-4">
               <label htmlFor="password">
                 Password
               </label>
-              <input id="password" type="password" placeholder="******************" value={this.state.loginForm.getFormField('password').getValue()} onChange={this.handleInputChange} />
-              <p className={`error-msg ${this.state.loginForm.getFormField('password').getError() === Validators.required ? 'show' : ''}`}>This field is required.</p>
+              <input id="password" type="password" placeholder="******************" value={this.state.loginForm.getFormField('password').value} onChange={this.handleInputChange} />
+              <p className={`error-msg ${this.state.loginForm.getFormField('password').error !== Validators.none ? 'show' : ''}`}>
+                This field is required.
+              </p>
             </div>
             <div className="flex justify-end mb-6">
               <Link to="/app/forgot-password" className="link">
@@ -115,6 +131,10 @@ class Login extends React.Component<{}, ILoginForm> {
                 Log in
               </button>
             </div>
+            {
+              this.state.loginError &&
+                <p className="error text-center mb-6">{this.state.loginError}</p>
+            }
             <hr className="mb-6"/>
             <div className="flex justify-center">
               <Link to="/app/signup" className="link">

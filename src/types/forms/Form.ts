@@ -1,13 +1,41 @@
 import { FormField } from "./FormField";
+import { IForm } from "./IForm";
 import { Validators } from "./Validators";
 
 export class Form {
   private formFields: object = {};
-  private submitted: boolean;
+  private properties: IForm = {
+    changed: false,
+    valid: true,
+    submitted: false
+  };
 
   constructor(formFields: FormField[]) {
-    formFields.forEach((formField: FormField) => this.formFields[formField.getName()] = formField );
-    this.submitted = false;
+    formFields.forEach((formField: FormField) => this.formFields[formField.name] = formField );
+  }
+
+  /**
+   * Gets and returns the changed property of the form.
+   * @returns {boolean} Returns true if any of the form fields have changed.
+   */
+  get changed(): boolean {
+    return this.properties.changed;
+  }
+
+  /**
+   * Gets and returns the valid property of the form.
+   * @returns {boolean} Returns true if the form is valid and false if the form is invalid.
+   */
+  get valid(): boolean {
+    return this.properties.valid;
+  }
+
+  /**
+   * Gets and returns the submitted property of the form.
+   * @returns {boolean} Returns true if the form has been submitted.
+   */
+  get submitted(): boolean {
+    return this.properties.submitted;
   }
 
   /**
@@ -16,10 +44,11 @@ export class Form {
    * @param {boolean} value The value we wish to set the submitted property on the form.
    */
   setSubmitted(value: boolean): void {
-    this.submitted = value;
+    this.properties.submitted = value;
     Object.keys(this.formFields).forEach((formFieldName: string) => {
       this.checkFormFieldValidity(formFieldName);
     });
+    this.checkFormIsValid();
   }
 
   /**
@@ -41,38 +70,50 @@ export class Form {
    * @param {string} value The value we wish to set the form field's value property to.
    */
   setFormFieldValue(formFieldName: string, value: string): void {
-      this.getFormField(formFieldName).setValue(value);
-      this.checkFormFieldValidity(formFieldName);
+    this.properties.changed = true;
+    this.getFormField(formFieldName).setValue(value);
+    this.checkFormFieldValidity(formFieldName);
+    this.checkFormIsValid();
   }
 
   /**
    * Sets a new touched value for a form field given the form field name and new value.
-   * Also checks the form field's validity and updates accordingly.
+   * Also checks the form field's and form's validity and updates accordingly.
    * @param {string} formFieldName The name of the form field we wish to set a new touched value to.
    * @param {boolean} value The value we wish to set the form field's touched property to.
    */
   setFormFieldTouched(formFieldName: string, value: boolean): void {
     this.getFormField(formFieldName).setTouched(value);
     this.checkFormFieldValidity(formFieldName);
+    this.checkFormIsValid();
   }
 
   /**
    * Checks the validity of a form field given the form field name.
    * @param {string} formFieldName The name of the form field we wish to check its validity.
    */
-  checkFormFieldValidity(formFieldName: string): void {
+  private checkFormFieldValidity(formFieldName: string): void {
     let formField: FormField = this.getFormField(formFieldName);
-    const includesRequired: boolean = formField.getValidators().includes(Validators.required);
-    const includesMatchForField: boolean = formField.getValidators().includes(Validators.matchFormField);
+    const includesRequired: boolean = formField.validators.includes(Validators.required);
+    const includesMatchForField: boolean = formField.validators.includes(Validators.matchFormField);
     if (includesRequired && includesMatchForField) {
-      formField.checkFormFieldValidity(this.submitted, this.getFormField(formField.getMatchFormField()).getValue());
+      formField.checkFormFieldValidity(this.submitted, this.getFormField(formField.matchFormFieldProperty).value);
     } else if (includesRequired) {
       formField.checkFormFieldValidity(this.submitted);
     } else if (includesMatchForField) {
-      formField.checkFormFieldValidity(null, this.getFormField(formField.getMatchFormField()).getValue());
+      formField.checkFormFieldValidity(null, this.getFormField(formField.matchFormFieldProperty).value);
     } else {
       formField.checkFormFieldValidity();
     }
+  }
+
+  /**
+   * Filters the form fields for any that may be invalid. Sets the valid property accordingly.
+   */
+  private checkFormIsValid() {
+    this.properties.valid = Object.keys(this.formFields).filter((formFieldName: string) => {
+      return !this.getFormField(formFieldName).value
+    }).length === 0;
   }
 
 }

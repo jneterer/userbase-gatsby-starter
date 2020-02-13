@@ -22,9 +22,21 @@ const Header = ({ siteTitle, user }) => (
     </h1>
     {
       user ?
-        <button className="btn-secondary" onClick={signOut}>
-          Sign out
-        </button> :
+        <div>
+          <Link to="/app/todo" className="mr-2">
+            <button className="btn-secondary">
+              Todos
+            </button>
+          </Link>
+          <Link to="/app/profile" className="mr-2">
+            <button className="btn-secondary">
+            Profile
+            </button>
+          </Link>
+          <button className="btn-accent" onClick={signOut}>
+            Sign out
+          </button>
+        </div> :
         <Link to="/app/login">
           <button className="btn-secondary">
             Login

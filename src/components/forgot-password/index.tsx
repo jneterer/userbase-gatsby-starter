@@ -1,5 +1,6 @@
 import React, { FormEvent } from "react";
 import { Link } from "gatsby";
+import userbase from "userbase-js"
 
 // Components
 import Layout from "../layout";
@@ -8,6 +9,7 @@ import SEO from "../../components/seo";
 // Types
 import { Form } from "../../types/forms/Form";
 import { FormField } from "../../types/forms/FormField";
+import { IError } from "../../types/userbase/IError";
 import { IForgotPasswordForm } from "./iforgot-password-form";
 import { Validators } from "../../types/forms/Validators";
 
@@ -16,8 +18,10 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
     super(props);
     this.state = {
       forgotPasswordForm: new Form([
-        new FormField('email', '', [Validators.required, Validators.email])
-      ])
+        new FormField('username', '', [Validators.required])
+      ]),
+      emailSent: false,
+      submissionError: null
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleBlurEvent = this.handleBlurEvent.bind(this);
@@ -36,8 +40,9 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
     forgotPasswordForm.setFormFieldValue(formFieldName, newFormFieldValue);
     this.setState((state: IForgotPasswordForm) => {
       return {
+        ...state,
         forgotPasswordForm: forgotPasswordForm
-      }
+      };
     });
   }
 
@@ -52,8 +57,9 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
     forgotPasswordForm.setFormFieldTouched(formFieldName, true);
     this.setState((state: IForgotPasswordForm) => {
       return {
+        ...state,
         forgotPasswordForm: forgotPasswordForm
-      }
+      };
     });
   }
 
@@ -67,9 +73,33 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
     forgotPasswordForm.setSubmitted(true);
     this.setState((state: IForgotPasswordForm) => {
       return {
+        ...state,
         forgotPasswordForm: forgotPasswordForm
-      }
+      };
     });
+    if (this.state.forgotPasswordForm.valid) {
+      userbase.forgotPassword({ 
+        username: this.state.forgotPasswordForm.getFormField('username').value
+      })
+      .then((user) => {
+        this.setState((state) => {
+          return {
+            ...state,
+            emailSent: true,
+            submissionError: null
+          };
+        });
+      })
+      .catch((error: IError) => {
+        this.setState((state) => {
+          return {
+            ...state,
+            emailSent: false,
+            submissionError: error.message
+          };
+        });
+      });
+    }
   }
 
   render() {
@@ -82,13 +112,12 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
               <h1 className="text-2xl">Forgot Password</h1>
             </div>
             <div className="mb-6">
-              <label htmlFor="email">
-                Email
+              <label htmlFor="username">
+                Username
               </label>
-              <input id="email" type="text" placeholder="Email" value={this.state.forgotPasswordForm.getFormField('email').getValue()} onChange={this.handleInputChange} onBlur={this.handleBlurEvent} />
-              <p className={`error-msg ${this.state.forgotPasswordForm.getFormField('email').getError() === Validators.required || this.state.forgotPasswordForm.getFormField('email').getError() === Validators.email ? 'show' : ''}`}>
-                { this.state.forgotPasswordForm.getFormField('email').getError() === Validators.required ? 'This field is required.' : '' }
-                { this.state.forgotPasswordForm.getFormField('email').getError() === Validators.email ? 'Please provide a valid email address.' : '' }
+              <input id="username" type="text" placeholder="Username" value={this.state.forgotPasswordForm.getFormField('username').error} onChange={this.handleInputChange} onBlur={this.handleBlurEvent} />
+              <p className={`error-msg ${this.state.forgotPasswordForm.getFormField('username').error !== Validators.none ? 'show' : ''}`}>
+                This field is required.
               </p>
             </div>
             <div className="flex justify-center mb-6">
@@ -96,6 +125,14 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordForm> {
                 Submit recovery request
               </button>
             </div>
+            {
+              this.state.emailSent &&
+                <p className="success text-center mb-6">Your forgot password request was submitted, please check your email.</p>
+            }
+            {
+              this.state.submissionError &&
+                <p className="error text-center mb-6">{this.state.submissionError}</p>
+            }
             <hr className="mb-6"/>
             <div className="flex justify-center">
               <Link to="/app/login" className="link">

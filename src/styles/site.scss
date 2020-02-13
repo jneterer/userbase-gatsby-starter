@@ -35,7 +35,7 @@ a {
     transition: background-color .25s ease;
   }
   @apply font-semibold py-2 px-10 rounded;
-  &:hover {
+  &:not(:disabled):hover {
     background-color: theme($hover-bg-color);
     @if $hover-text-color {
       color: theme($hover-text-color);
@@ -56,6 +56,26 @@ a {
   &-secondary {
     @include btn-style('colors.white', 'colors.black', 'colors.black', 'colors.white');
   }
+  &-accent {
+    @include btn-style('colors.orange.400', 'colors.black', 'colors.black', 'colors.white');
+    border: 1px solid black;
+  }
+  &-error {
+    @include btn-style('colors.red.600', 'colors.red.700', 'colors.white');
+  }
 }
 
+button:disabled {
+  opacity: .5;
+  @apply transition-all duration-200;
+  &:hover {
+    cursor: default;
+  }
+}
 
+.error {
+  color: theme('colors.red.600');
+}
+.success {
+  color: theme('colors.green.600');
+}

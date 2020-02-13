@@ -28,7 +28,7 @@ export class FormField {
    * Gets the name property from the form field.
    * @returns {string}
    */
-  public getName(): string {
+  get name(): string {
     return this.properties.name;
   }
 
@@ -36,7 +36,7 @@ export class FormField {
    * Gets the value property from the form field.
    * @returns {string}
    */
-  public getValue(): string {
+  get value(): string {
     return this.properties.value;
   }
 
@@ -44,7 +44,7 @@ export class FormField {
    * Gets the error property from the form field.
    * @returns {Validators}
    */
-  public getError(): Validators {
+  get error(): Validators {
     return this.properties.error;
   }
 
@@ -52,7 +52,7 @@ export class FormField {
    * Gets the matchFormField property from the form field.
    * @returns {string}
    */
-  public getMatchFormField(): string {
+  get matchFormFieldProperty(): string {
     return this.properties.matchFormField;
   }
 
@@ -60,8 +60,16 @@ export class FormField {
    * Get the validators property from the form field.
    * @returns {Validators[]}
    */
-  public getValidators(): Validators[] {
+  get validators(): Validators[] {
     return this.properties.validators;
+  }
+
+  /**
+   * Gets and returns the valid property of the form field.
+   * @returns {boolean} Returns true if the form field is valid and false if the form field is invalid.
+   */
+  get valid(): boolean {
+    return this.properties.valid;
   }
 
   /**
