@@ -5,7 +5,7 @@ import { navigate } from "@reach/router";
 import userbase from "userbase-js";
 
 const Header = ({ siteTitle, user }) => (
-  <header className="fixed w-full bg-orange.400 h-20 z-50 flex justify-between items-center px-20">
+  <header className="fixed w-full bg-purple-800 h-20 z-50 flex justify-between items-center px-20">
     <h1 className="m-0 text-4xl">
       <Link
         to="/"

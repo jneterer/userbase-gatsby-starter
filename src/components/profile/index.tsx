@@ -209,7 +209,7 @@ class Profile extends React.Component<{ user: UserResult }, IProfileState> {
           <Match path="/app/profile/changePasswordNeeded">
             {
               props => (props.match && !this.state.changePasswordFormSuccess) ? 
-                <div className="bg-red-600 text-white text-center p-4">
+                <div className="bg-red-800 text-white text-center p-4">
                   <p>
                     Please change your password before continuing. The temporary password you used
                     is only valid for 24 hours after you submitted your forgot password request.

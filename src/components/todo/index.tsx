@@ -202,7 +202,7 @@ class Todo extends React.Component<{ user: UserResult }, ITodoState> {
             this.state.todos.map((todo: Item, index: number) => {
               return (
                 <div key={todo.itemId} className="flex flex-row items-center my-4">
-                  <button className="btn-icon bg-red-600 text-white" onClick={e => this.deleteTodo(e, todo.itemId, index)}>
+                  <button className="btn-icon bg-red-800 text-white" onClick={e => this.deleteTodo(e, todo.itemId, index)}>
                     X
                   </button>
                   <input className="ml-4" type="checkbox" id={todo.itemId} name={todo.itemId} value={ todo.item.completed } checked={ todo.item.completed } onChange={(e) => {this.handleCompletionChange(e, todo.item, index)}} />

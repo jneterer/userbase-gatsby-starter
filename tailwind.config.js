@@ -11,8 +11,8 @@ module.exports = {
       ['2xl']: '0 25px 50px -12px rgba(0, 0, 0, .25)',
       ['3xl:']: '0 35px 60px -15px rgba(0, 0, 0, .3)',
       inner: 'inset 0 2px 4px 0 rgba(0,0,0,0.06)',
-      outline: '0 0 0 3px rgba(246, 173, 85,0.5)',
-      focus: '0 0 0 3px rgba(246, 173, 85,0.5)',
+      outline: '0 0 0 3px rgba(86, 60, 154,0.5)',
+      focus: '0 0 0 3px rgba(86, 60, 154,0.5)',
     }
   },
   variants: {},

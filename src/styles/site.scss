@@ -13,7 +13,7 @@
 a {
   &.link {
     @apply font-black;
-    color: theme('colors.orange.400') !important;
+    color: theme('colors.purple.800') !important;
     text-decoration: underline !important;
     transition: color .25s ease;
     &:hover {
@@ -51,14 +51,14 @@ a {
 
 .btn {
   &-primary {
-    @include btn-style('colors.orange.400', 'colors.orange.300', 'colors.black');
+    @include btn-style('colors.purple.800', 'colors.purple.300', 'colors.white', 'colors.black');
   }
   &-secondary {
     @include btn-style('colors.white', 'colors.black', 'colors.black', 'colors.white');
   }
   &-accent {
-    @include btn-style('colors.orange.400', 'colors.black', 'colors.black', 'colors.white');
-    border: 1px solid black;
+    @include btn-style('colors.purple.800', 'colors.black', 'colors.white');
+    border: 1px solid white;
   }
   &-error {
     @include btn-style('colors.red.600', 'colors.red.700', 'colors.white');
