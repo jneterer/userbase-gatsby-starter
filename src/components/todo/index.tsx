@@ -1,5 +1,5 @@
 import React, { FormEvent, FocusEvent, MouseEvent } from "react"
-import userbase, { UserResult, Item } from "userbase-js"
+const userbase = typeof window !== 'undefined' ? require('userbase-js').default : null;
 
 // Components
 import Layout from "../layout"
@@ -13,7 +13,7 @@ import { ITodo } from "../../types/todo/itodo";
 import { ITodoState } from "../../types/todo/itodo-state";
 import { Validators } from "../../types/forms/Validators"
 
-class Todo extends React.Component<{ user: UserResult }, ITodoState> {
+class Todo extends React.Component<{ user: userbase.UserResult }, ITodoState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,7 +48,7 @@ class Todo extends React.Component<{ user: UserResult }, ITodoState> {
    * Updates the state on any changes to the database.
    * @param {Item[]} items 
    */
-  handleDBChanges(items: Item[]) {
+  handleDBChanges(items: userbase.Item[]) {
     this.setState((state) => {
       return {
         ...state,
@@ -65,7 +65,7 @@ class Todo extends React.Component<{ user: UserResult }, ITodoState> {
    */
   handleCompletionChange(event: FormEvent<HTMLInputElement>, todo: ITodo, index: number) {
     event.persist();
-    let newTodos: Item[] = this.state.todos;
+    let newTodos: userbase.Item[] = this.state.todos;
     newTodos[index].item = {
       ...newTodos[index].item,
       completed: !todo.completed 
@@ -97,7 +97,7 @@ class Todo extends React.Component<{ user: UserResult }, ITodoState> {
    */
   deleteTodo(event: MouseEvent<HTMLButtonElement>, itemId: string, index: number) {
     event.persist();
-    let newTodos: Item[] = this.state.todos;
+    let newTodos: userbase.Item[] = this.state.todos;
     newTodos.splice(index, 1);
     this.setState((state) => {
       return {
@@ -199,7 +199,7 @@ class Todo extends React.Component<{ user: UserResult }, ITodoState> {
         }
         <div className="mt-4">
           {
-            this.state.todos.map((todo: Item, index: number) => {
+            this.state.todos.map((todo: userbase.Item, index: number) => {
               return (
                 <div key={todo.itemId} className="flex flex-row items-center my-4">
                   <button className="btn-icon bg-red-800 text-white" onClick={e => this.deleteTodo(e, todo.itemId, index)}>

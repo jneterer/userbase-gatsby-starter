@@ -1,8 +1,8 @@
-import { UserResult } from "userbase-js";
+const userbase = typeof window !== 'undefined' ? require('userbase-js').default : null;
 import { Form } from "../forms/Form";
 
 export interface IProfileState {
-  user: UserResult
+  user: userbase.UserResult
   accountInfoForm: Form;
   accountInfoFormSuccess: boolean;
   accountInfoFormError: string;

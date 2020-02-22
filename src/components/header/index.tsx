@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "gatsby";
 import { navigate } from "@reach/router";
-import userbase from "userbase-js";
+const userbase = typeof window !== 'undefined' ? require('userbase-js').default : null;
 
 const Header = ({ siteTitle, user }) => (
   <header className="fixed w-full bg-purple-800 h-20 z-50 flex justify-between items-center px-20">

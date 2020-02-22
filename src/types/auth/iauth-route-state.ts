@@ -1,8 +1,8 @@
 import { ComponentClass } from "react"
-import { UserResult } from "userbase-js"
+const userbase = typeof window !== 'undefined' ? require('userbase-js').default : null;
 
 export interface IAuthRouteState {
-  user: UserResult;
+  user: userbase.UserResult;
   isLoading: boolean;
   page: ComponentClass;
 }

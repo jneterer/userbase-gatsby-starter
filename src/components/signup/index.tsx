@@ -1,6 +1,6 @@
 import React, { FormEvent, FocusEvent } from "react";
 import { Link, navigate } from "gatsby";
-import userbase, { UserResult } from "userbase-js";
+const userbase = typeof window !== 'undefined' ? require('userbase-js').default : null;
 
 // Components
 import Layout from "../layout";
@@ -10,7 +10,7 @@ import SEO from "../../components/seo";
 import { Form } from "../../types/forms/Form";
 import { FormField } from "../../types/forms/FormField";
 import { IError } from "../../types/userbase/IError";
-import { ISignupDto } from "../../types/userbase/ISignupDto";
+import { ISignupDto } from "../../types/userbase/isignup-dto";
 import { ISignupState } from "../../types/signup/isignup-state";
 import { Validators } from "../../types/forms/Validators";
 
@@ -108,7 +108,7 @@ class Signup extends React.Component<{}, ISignupState> {
         signupDto.profile = null;
       }
       userbase.signUp(signupDto)
-      .then((user: UserResult) => {
+      .then((user: userbase.UserResult) => {
         navigate('/app/dashboard');
       })
       .catch((error: IError) => {

@@ -1,7 +1,7 @@
-import { RememberMeOption } from "userbase-js";
+const userbase = typeof window !== 'undefined' ? require('userbase-js').default : null;
 
 export interface ILoginDto {
   username: string;
   password: string;
-  rememberMe: RememberMeOption;
+  rememberMe: userbase.RememberMeOption;
 }

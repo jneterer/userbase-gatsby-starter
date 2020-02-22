@@ -1,9 +1,9 @@
-import { UserProfile } from "userbase-js";
+const userbase = typeof window !== 'undefined' ? require('userbase-js').default : null;
 
 export interface IUpdateAccountInfoDto {
   username: string;
   currentPassword?: string;
   newPassword?: string;
   email?: string;
-  profile?: UserProfile;
+  profile?: userbase.UserProfile;
 }

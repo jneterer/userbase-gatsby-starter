@@ -1,6 +1,6 @@
 import React, { FormEvent, FocusEvent } from "react";
 import { Link, navigate } from "gatsby";
-import userbase, { UserResult } from "userbase-js";
+const userbase = typeof window !== 'undefined' ? require('userbase-js').default : null;
 
 // Components
 import Layout from "../layout";
@@ -80,7 +80,7 @@ class Login extends React.Component<{}, ILoginState> {
         rememberMe: 'local'
       };
       userbase.signIn(loginDto)
-      .then((user: UserResult) => {
+      .then((user: userbase.UserResult) => {
         navigate(user['usedTempPassword'] ? '/app/profile/changePasswordNeeded' : '/app/todo');
       })
       .catch((error: IError) => {

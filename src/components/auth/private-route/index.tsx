@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "@reach/router";
-import userbase from "userbase-js";
+const userbase = typeof window !== 'undefined' ? require('userbase-js').default : null;
 
 // Components
 import Layout from "../../layout";

@@ -1,6 +1,6 @@
 import React, { FormEvent, FocusEvent } from "react";
 import { Link } from "gatsby";
-import userbase from "userbase-js";
+const userbase = typeof window !== 'undefined' ? require('userbase-js').default : null;
 
 // Components
 import Layout from "../layout";
@@ -115,7 +115,7 @@ class ForgotPassword extends React.Component<{}, IForgotPasswordState> {
               <label htmlFor="username">
                 Username
               </label>
-              <input id="username" type="text" placeholder="Username" value={this.state.forgotPasswordForm.getFormField('username').error} onChange={this.handleInputChange} onBlur={this.handleBlurEvent} />
+              <input id="username" type="text" placeholder="Username" value={this.state.forgotPasswordForm.getFormField('username').value} onChange={this.handleInputChange} onBlur={this.handleBlurEvent} />
               <p className={`error-msg ${this.state.forgotPasswordForm.getFormField('username').error !== Validators.none ? 'show' : ''}`}>
                 This field is required.
               </p>
