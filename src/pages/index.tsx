@@ -18,7 +18,7 @@ const IndexPage = () => (
       Built using the exciting new serverless JavaScript
       {` `}SDK <a className="link" href="https://userbase.com/" target="_blank" rel="noopener noreferrer">Userbase</a>.
     </p>
-    <p>You can read how to set up this Userbase Gatsby Starter here: <a className="link" href="https://github.com/jneterer/userbase-gatsby" target="_blank" rel="noopener noreferrer">README</a>.</p>
+    <p>You can read how to set up this Userbase Gatsby Starter here: <a className="link" href="https://github.com/jneterer/userbase-gatsby-starter/blob/master/README.md" target="_blank" rel="noopener noreferrer">README</a>.</p>
   </Layout>
 )
 
