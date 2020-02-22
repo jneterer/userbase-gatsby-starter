@@ -5,7 +5,9 @@ This [Gatsby](https://www.gatsbyjs.org/) starter project is for [Userbase](https
 ## Getting Started
 
 Assuming that you already have gatsby installed, install the Userbase Gatsby Starter:
-> gatsby new userbase-gatsby https://github.com/jneterer/userbase-gatsby-tailwind-typescript
+```
+gatsby new userbase-gatsby https://github.com/jneterer/userbase-gatsby-tailwind-typescript
+```
 
 ### Running in development
 
