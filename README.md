@@ -4,7 +4,7 @@ This [Gatsby](https://www.gatsbyjs.org/) starter project is for [Userbase](https
 
 ## Demo Site
 
-The demo site for this project can be found [here](https://userbase-gatsby-starter.jacobneterer.com).
+The demo site for this project can be found [here](https://userbase-gatsby-starter.netlify.com/).
 
 ## Getting Started
 
