@@ -4,13 +4,13 @@ This [Gatsby](https://www.gatsbyjs.org/) starter project is for [Userbase](https
 
 ## Demo Site
 
-The demo site for this project can be found [here](https://userbase-gatsby-starter.netlify.com/).
+The demo site for this project can be found [here](https://userbase-gatsby-starter.jacobneterer.com/).
 
 ## Getting Started
 
 Assuming that you already have gatsby installed, install the Userbase Gatsby Starter:
 ```
-gatsby new userbase-gatsby https://github.com/jneterer/userbase-gatsby-tailwind-typescript
+gatsby new userbase-gatsby https://github.com/jneterer/userbase-gatsby-starter
 ```
 
 ### Running in development
