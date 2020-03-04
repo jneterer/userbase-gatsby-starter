@@ -1,5 +1,4 @@
-# Gatsby Starter - Userbase, TailwindCSS, Sass, & Typescript 
-[![Netlify Status (https://api.netlify.com/api/v1/badges/1a5f926a-5ec4-4180-a217-d8b99b9ecd48/deploy-status) (https://app.netlify.com/sites/userbase-gatsby-starter/deploys)
+# Gatsby Starter - Userbase, TailwindCSS, Sass, & Typescript [![Netlify Status](https://api.netlify.com/api/v1/badges/1a5f926a-5ec4-4180-a217-d8b99b9ecd48/deploy-status)](https://app.netlify.com/sites/userbase-gatsby-starter/deploys)
 
 This [Gatsby](https://www.gatsbyjs.org/) starter project is for [Userbase](https://userbase.com/) web apps. It also uses [TailwindCSS](https://tailwindcss.com/) for the styling framework, the preprocessor [Sass](https://sass-lang.com/), and [Typescript](https://www.typescriptlang.org/).
 
