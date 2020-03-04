@@ -15,7 +15,7 @@ gatsby new userbase-gatsby https://github.com/jneterer/userbase-gatsby-tailwind-
 
 ### Running in development
 
-`npm run develop`
+`gatsby develop`
 
 ### Set up basic environment variables
 
