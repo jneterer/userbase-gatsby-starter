@@ -29,12 +29,15 @@ a {
 @mixin btn-style($bg-color, $hover-bg-color, $text-color, $hover-text-color: false) {
   background-color: theme($bg-color);
   color: theme($text-color);
+  @screen sm {
+    @apply py-2 px-10;
+  }
+  @apply py-2 px-8 font-semibold rounded;
   @if $hover-text-color {
     transition: background-color .25s, color .25s ease;
   } @else {
     transition: background-color .25s ease;
   }
-  @apply font-semibold py-2 px-10 rounded;
   &:not(:disabled):hover {
     background-color: theme($hover-bg-color);
     @if $hover-text-color {
