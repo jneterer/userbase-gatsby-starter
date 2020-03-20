@@ -5,7 +5,7 @@ import { navigate } from "@reach/router";
 const userbase = typeof window !== 'undefined' ? require('userbase-js').default : null;
 
 const Header = ({ siteTitle, user }) => (
-  <header className="fixed w-full bg-purple-800 sm:h-20 z-50 flex sm:flex-row flex-wrap sm:justify-between justify-center items-center pb-3 px-1 sm:px-20">
+  <header className="fixed w-full bg-purple-800 sm:h-20 z-50 flex sm:flex-row flex-wrap justify-around sm:justify-between items-center px-1 sm:px-20">
     <h1 className="m-0 text-4xl">
       <Link
         to="/"
@@ -19,7 +19,7 @@ const Header = ({ siteTitle, user }) => (
     </h1>
     {
       user ?
-        <nav>
+        <nav className="sm:pb-0 pb-3">
           <Link to="/app/todo" className="mr-2">
             <button className="btn-secondary">
               Todos
